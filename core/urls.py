@@ -9,5 +9,5 @@ urlpatterns = [
     path('health/', lambda _: JsonResponse({'detail': 'Healthy'}), name='health'),
 ]
 if settings.DEBUG:
-    static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
