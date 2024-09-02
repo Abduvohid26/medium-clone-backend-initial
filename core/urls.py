@@ -8,8 +8,8 @@ from django.contrib.auth.decorators import user_passes_test
 
 def is_superuser(user):
     # return user.is_superuser    # faqat superuserlar ko'ra oladi
-    return user.is_authenticated
-    # return True qilinsa istalgan user kira oladi
+    # return user.is_authenticated
+    return True # qilinsa istalgan user kira oladi
 
 # urllarninig classlarini to'g'irlab chiqing schema, swagger, redo
 
