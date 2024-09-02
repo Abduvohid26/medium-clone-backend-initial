@@ -9,7 +9,7 @@ from django.contrib.auth import get_user_model
 from .serializers import UserSerializer, LoginSerializer, ValidationErrorSerializer, TokenResponseSerializer, \
     UserUpdateSerializer
 from drf_spectacular.utils import extend_schema, extend_schema_view
-
+from django_redis import get_redis_connection
 User = get_user_model()
 
 # Swagger uchun kerakli sozlamalar
@@ -117,6 +117,12 @@ class UsersMe(generics.RetrieveAPIView, generics.UpdateAPIView):
         return UserSerializer
 
     def patch(self, request, *args, **kwargs):
+        redis_conn = get_redis_connection('default')
+        redis_conn.ping()
+        print('success')
+        redis_conn.set('test_key', 'test_value', ex=3600)
+        cashed_value = redis_conn.get('test_key')
+        print(cashed_value)
         return super().partial_update(request, *args, **kwargs)
 
 

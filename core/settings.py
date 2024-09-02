@@ -31,7 +31,8 @@ DJANGO_APPS = [
 EXTERNAL_APPS = [
     'rest_framework',            # yangi package ni qo'shib olamiz
     'rest_framework_simplejwt',  # yangi package ni qo'shib olamiz
-    'drf_spectacular'
+    'drf_spectacular',
+    'django_redis'
 ]
 
 LOCAL_APPS = [
@@ -70,6 +71,25 @@ SPECTACULAR_SETTINGS = {
     },
 }
 
+REDIS_HOST = config('REDIS_HOST', default='localhost')
+REDIS_PORT = config('REDIS_PORT', default='6379')
+REDIS_DB = config('REDIS_DB', default='1')
+
+# REDIS_URL = f'redis://localhost:6379/1'
+REDIS_URL = f'redis://{REDIS_HOST}:{REDIS_PORT}/{REDIS_DB}'
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': REDIS_URL,
+        'OPTIONS': {
+            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+        }
+    }
+}
+
+SESSION_ENGINE = "django.contrib.sessions.backends.cache"
+SESSION_CACHE_ALIAS = "default"
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
