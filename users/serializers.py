@@ -66,16 +66,16 @@ class ValidationErrorSerializer(serializers.Serializer):
 class UserUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['id', 'first_name', 'last_name', 'middle_name', 'email', 'avatar', 'birth_year']
+        fields = ['id', 'first_name', 'last_name', 'middle_name', 'email', 'avatar', 'brith_year']
 
-    def validate_birth_year(self, value):    # tug'ilgan yil oralig'ini tekshirish uchun to'rtinchi variant
+    def validate_brith_year(self, value):    # tug'ilgan yil oralig'ini tekshirish uchun to'rtinchi variant
         if not (settings.BIRTH_YEAR_MIN < value < settings.BIRTH_YEAR_MAX):
             raise serializers.ValidationError(BIRTH_YEAR_ERROR_MSG)
         return value
 
     def validate(self, data):                # tug'ilgan yil oralig'ini tekshirish uchun beshinchi variant
-        birth_year = data.get('birth_year')
+        birth_year = data.get('brith_year')
         if birth_year is not None:
             if not (settings.BIRTH_YEAR_MIN < birth_year < settings.BIRTH_YEAR_MAX):
-                raise serializers.ValidationError({"birth_year": BIRTH_YEAR_ERROR_MSG})
+                raise serializers.ValidationError({"brith_year": BIRTH_YEAR_ERROR_MSG})
         return data
