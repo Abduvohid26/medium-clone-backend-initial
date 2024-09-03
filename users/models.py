@@ -7,6 +7,7 @@ from django.core import validators
 from django.conf import settings
 from django.core.exceptions import ValidationError
 from .errors import BIRTH_YEAR_ERROR_MSG
+from django.contrib.postgres.indexes import HashIndex
 
 def file_upload(instance, filename):
     """ This function is used to upload the user's avatar. """
@@ -39,6 +40,12 @@ class CustomUser(AbstractUser):
         verbose_name = "User"
         verbose_name_plural = "Users"
         ordering = ["-date_joined"]  # descending order by date joined
+        indexes = [
+                HashIndex(fields=['first_name'], name='%(class)s_first_name_hash_idx'),
+                HashIndex(fields=['last_name'], name='%(class)s_last_name_hash_idx'),
+                HashIndex(fields=['middle_name'], name='%(class)s_middle_name_hash_idx'),
+                models.Index(fields=['username'], name='%(class)s_username_idx'),
+        ]
         constraints = [
             models.CheckConstraint(
                 check=models.Q(birth_year__gt=settings.BIRTH_YEAR_MIN) & models.Q(birth_year__lt=settings.BIRTH_YEAR_MAX),
