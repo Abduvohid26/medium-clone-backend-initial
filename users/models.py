@@ -3,6 +3,10 @@ from django.db import models
 import os
 import uuid
 from django_resized import ResizedImageField
+from django.core import validators
+from django.conf import settings
+from django.core.exceptions import ValidationError
+from .errors import BIRTH_YEAR_ERROR_MSG
 
 def file_upload(instance, filename):
     """ This function is used to upload the user's avatar. """
@@ -14,6 +18,20 @@ class CustomUser(AbstractUser):
     """  This model represents a custom user. """
     avatar = ResizedImageField(size=[300, 300], crop=['top', 'left'], upload_to=file_upload, blank=True)
     middle_name = models.CharField(max_length=30, blank=True, null=True)
+    brith_year = models.IntegerField(
+        validators=[
+            validators.MinValueValidator(settings.BIRTH_YEAR_MIN),
+            validators.MaxValueValidator(settings.BIRTH_YEAR_MAX)
+        ], null=True, blank=True
+    )
+    def clean(self):
+        super().clean()
+        if self.brith_year and not (settings.BIRTH_YEAR_MIN < self.brith_year > settings.BIRTH_YEAR_MAX):
+            raise ValidationError(BIRTH_YEAR_ERROR_MSG)
+
+    def save(self, *args, **kwargs):
+        self.clean()
+        super().save(*args, **kwargs)
 
 
     class Meta:
@@ -21,6 +39,12 @@ class CustomUser(AbstractUser):
         verbose_name = "User"
         verbose_name_plural = "Users"
         ordering = ["-date_joined"]  # descending order by date joined
+        constraints = [
+            models.CheckConstraint(
+                check=models.Q(brith_year__gt=settings.BIRTH_YEAR_MIN) & models.Q(brith_year__lt=settings.BIRTH_YEAR_MAX),
+                name='check_brith_year_range'
+            )
+        ]
 
 
     def __str__(self):
