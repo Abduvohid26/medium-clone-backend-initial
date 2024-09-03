@@ -26,7 +26,7 @@ class CustomUser(AbstractUser):
     )
     def clean(self):
         super().clean()
-        if self.birth_year and not (settings.BIRTH_YEAR_MIN < self.birth_year > settings.BIRTH_YEAR_MAX):
+        if self.birth_year and not (settings.BIRTH_YEAR_MIN < self.birth_year < settings.BIRTH_YEAR_MAX):
             raise ValidationError(BIRTH_YEAR_ERROR_MSG)
 
     def save(self, *args, **kwargs):
