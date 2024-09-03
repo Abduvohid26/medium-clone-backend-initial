@@ -18,7 +18,7 @@ class CustomUser(AbstractUser):
     """  This model represents a custom user. """
     avatar = ResizedImageField(size=[300, 300], crop=['top', 'left'], upload_to=file_upload, blank=True)
     middle_name = models.CharField(max_length=30, blank=True, null=True)
-    brith_year = models.IntegerField(
+    birth_year = models.IntegerField(
         validators=[
             validators.MinValueValidator(settings.BIRTH_YEAR_MIN),
             validators.MaxValueValidator(settings.BIRTH_YEAR_MAX)
@@ -26,7 +26,7 @@ class CustomUser(AbstractUser):
     )
     def clean(self):
         super().clean()
-        if self.brith_year and not (settings.BIRTH_YEAR_MIN < self.brith_year > settings.BIRTH_YEAR_MAX):
+        if self.birth_year and not (settings.BIRTH_YEAR_MIN < self.birth_year > settings.BIRTH_YEAR_MAX):
             raise ValidationError(BIRTH_YEAR_ERROR_MSG)
 
     def save(self, *args, **kwargs):
@@ -41,8 +41,8 @@ class CustomUser(AbstractUser):
         ordering = ["-date_joined"]  # descending order by date joined
         constraints = [
             models.CheckConstraint(
-                check=models.Q(brith_year__gt=settings.BIRTH_YEAR_MIN) & models.Q(brith_year__lt=settings.BIRTH_YEAR_MAX),
-                name='check_brith_year_range'
+                check=models.Q(birth_year__gt=settings.BIRTH_YEAR_MIN) & models.Q(birth_year__lt=settings.BIRTH_YEAR_MAX),
+                name='check_birth_year_range'
             )
         ]
 
