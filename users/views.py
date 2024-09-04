@@ -12,6 +12,9 @@ from drf_spectacular.utils import extend_schema, extend_schema_view
 from django_redis import get_redis_connection
 User = get_user_model()
 
+from .enums import TokenType
+from .services import TokenService, UserService
+
 # Swagger uchun kerakli sozlamalar
 @extend_schema_view(
     post=extend_schema(
@@ -125,6 +128,22 @@ class UsersMe(generics.RetrieveAPIView, generics.UpdateAPIView):
         print(cashed_value)
         return super().partial_update(request, *args, **kwargs)
 
+@extend_schema_view(
+    post=extend_schema(
+        summary='Log out user',
+        request=None,
+        responses={
+            200: ValidationErrorSerializer,
+            400: ValidationErrorSerializer
+        }
+    )
+)
+class LogoutView(generics.GenericAPIView):
+    permission_classes = [permissions.IsAuthenticated]
+    @extend_schema(responses=None)
+    def post(self, request, *args, **kwargs):
+        UserService.create_tokens(user=request.user, access='fake_token', refresh='fake_token', is_force_add_to_redis=True)
+        return Response({'detail': 'Mufaqqiyatli chiqildi'})
 
 
 
