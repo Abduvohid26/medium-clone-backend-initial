@@ -13,7 +13,7 @@ from django_redis import get_redis_connection
 from django.contrib.auth import update_session_auth_hash
 import random
 from .services import SendEmailService
-from django.core.exceptions import ValidationError
+from rest_framework.exceptions import ValidationError
 User = get_user_model()
 
 from .enums import TokenType
