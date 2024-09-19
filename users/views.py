@@ -9,7 +9,7 @@ from django.contrib.auth import update_session_auth_hash
 import random
 from rest_framework.exceptions import ValidationError
 from rest_framework import status, permissions, generics, parsers, exceptions
-
+from django.utils.translation import gettext_lazy as _
 from .serializers import (
     UserSerializer,
     LoginSerializer,
@@ -95,7 +95,7 @@ class LoginView(APIView):
                 'access': str(refresh.access_token),
             }, status=status.HTTP_200_OK)
         else:
-            return Response({'detail': 'Hisob maʼlumotlari yaroqsiz'}, status=status.HTTP_401_UNAUTHORIZED)
+            return Response({'detail': _('Hisob maʼlumotlari yaroqsiz')}, status=status.HTTP_401_UNAUTHORIZED)
 
 
 @extend_schema_view(
@@ -154,7 +154,7 @@ class LogoutView(generics.GenericAPIView):
     @extend_schema(responses=None)
     def post(self, request, *args, **kwargs):
         UserService.create_tokens(user=request.user, access='fake_token', refresh='fake_token', is_force_add_to_redis=True)
-        return Response({'detail': 'Mufaqqiyatli chiqildi'})
+        return Response({'detail': _('Mufaqqiyatli chiqildi')})
 
 
 
@@ -183,7 +183,7 @@ class ChangePasswordView(APIView):
             tokens = UserService.create_tokens(user, is_force_add_to_redis=True)
             return Response(tokens)
         else:
-            raise ValidationError("Eski parol xato")
+            raise ValidationError(_("Eski parol xato"))
 
 @extend_schema_view(
     post=extend_schema(
@@ -219,7 +219,7 @@ class ForgotPasswordView(generics.CreateAPIView):
         except Exception:
             redis_conn = OTPService.get_redis_conn()
             redis_conn.delete(f"{email}:otp")
-            raise ValidationError("Email xabar yuborishda xatolik yuz berdi")
+            raise ValidationError(_("Email xabar yuborishda xatolik yuz berdi"))
 @extend_schema_view(
     post=extend_schema(
         summary="Forgot Password Verify",
@@ -277,7 +277,7 @@ class ResetPasswordView(generics.UpdateAPIView):
         email = redis_conn.get(token_hash)
 
         if not email:
-            raise ValidationError("Token Yaroqsiz")
+            raise ValidationError(_("Token Yaroqsiz"))
 
         users = User.objects.filter(email=email.decode(), is_active=True)
         if not users.exists():

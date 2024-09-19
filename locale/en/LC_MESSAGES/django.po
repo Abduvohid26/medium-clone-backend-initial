@@ -1,0 +1,99 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-09-19 12:51+0500\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+#: core/settings.py:180
+msgid "English"
+msgstr "English"
+
+#: core/settings.py:181
+msgid "Uzbek"
+msgstr "English"
+
+#: core/settings.py:182
+msgid "Russian"
+msgstr "Russian"
+
+#: users/authentications.py:22
+msgid "Access token yaroqsiz"
+msgstr "Access token invalid"
+
+#: users/authentications.py:32
+msgid "Kirisih malumotlar yaroqsiz"
+msgstr "Enter information is incorrect"
+
+#: users/errors.py:3
+#, python-brace-format
+msgid ""
+"Tug'ilgan yili {min_year} dan katta va {max_year} dan kichik bo'lishi kerak."
+msgstr "Birth year must be greater than {min_year} and less than {max_year}."
+
+#: users/errors.py:4
+msgid "Ushbu elektron pochta manzili bilan faol foydalanuvchi topilmadi!"
+msgstr "Birth year must be greater than {min_year} and less than {max_year}."
+
+#: users/exceptions.py:7
+msgid "OTP verification failed."
+msgstr "OTP verification failed."
+
+#: users/serializers.py:49
+msgid "Kirish maʼlumotlari notoʻgʻri"
+msgstr "Enter information is incorrect"
+
+#: users/serializers.py:51
+msgid "Foydalanuvchi nomi va parol ham talab qilinadi"
+msgstr "A username and password are also required"
+
+#: users/serializers.py:102
+msgid "Yangi va eski parollar bir xil bo'lmasligi kerak"
+msgstr "New and old passwords should not be the same"
+
+#: users/serializers.py:111
+msgid "Email topilmadi"
+msgstr "Email not found"
+
+#: users/services.py:143
+#, python-brace-format
+msgid ""
+"Sizda yaroqli OTP kodingiz bor. {ttl} soniydan keyin qayta urinib ko'ring"
+msgstr "You have a valid OTP code. Try again in {ttl} seconds"
+
+#: users/services.py:153
+msgid "Yaroqsiz otp kodi"
+msgstr "Invalid otp code"
+
+#: users/views.py:98
+msgid "Hisob maʼlumotlari yaroqsiz"
+msgstr "Credentials are invalid"
+
+#: users/views.py:157
+msgid "Mufaqqiyatli chiqildi"
+msgstr "Released successfully"
+
+#: users/views.py:186
+msgid "Eski parol xato"
+msgstr "The old password is wrong"
+
+#: users/views.py:222
+msgid "Email xabar yuborishda xatolik yuz berdi"
+msgstr "
+There was an error sending the email message"
+
+#: users/views.py:280
+msgid "Token is not valid"
+msgstr ""

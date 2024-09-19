@@ -7,6 +7,8 @@ from django.conf import settings
 from .errors import BIRTH_YEAR_ERROR_MSG
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError
+from django.utils.translation import gettext_lazy as _
+
 User = get_user_model()
 
 
@@ -44,9 +46,9 @@ class LoginSerializer(serializers.Serializer):  # user login uchun [serializer](
         if username and password:
             user = authenticate(username=username, password=password)
             if user is None:
-                raise serializers.ValidationError('Kirish maʼlumotlari notoʻgʻri')
+                raise serializers.ValidationError(_('Kirish maʼlumotlari notoʻgʻri'))
         else:
-            raise serializers.ValidationError('Foydalanuvchi nomi va parol ham talab qilinadi')
+            raise serializers.ValidationError(_('Foydalanuvchi nomi va parol ham talab qilinadi'))
 
         data['user'] = user
         return data
@@ -97,7 +99,7 @@ class ChangePasswordSerializer(serializers.Serializer):
 
     def validate(self, data):
         if data['new_password'] == data['old_password']:
-            raise serializers.ValidationError("Yangi va eski parollar bir xil bo'lmasligi kerak")
+            raise serializers.ValidationError(_("Yangi va eski parollar bir xil bo'lmasligi kerak"))
         return data
 
 
@@ -106,7 +108,7 @@ class ForgotPasswordRequestSerializer(serializers.Serializer):
 
     def validate_email(self, value):
         if not User.objects.filter(email=value).exists():
-            raise ValidationError("Email topilmadi")
+            raise ValidationError(_("Email topilmadi"))
         return value
 
 class ForgotPasswordResponseSerializer(serializers.Serializer):

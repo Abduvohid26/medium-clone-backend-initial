@@ -12,7 +12,7 @@ import random
 import string
 from secrets import token_urlsafe
 from .exceptions import OTPException
-
+from django.utils.translation import gettext_lazy as _
 # redis uchun malumotlarni olamiz
 REDIS_HOST = config("REDIS_HOST", None)
 REDIS_PORT = config("REDIS_PORT", None)
@@ -139,7 +139,7 @@ class OTPService:
         key = f"{email}:otp"
         if check_if_exists and redis_conn.exists(key):
             ttl = redis_conn.ttl(key)
-            raise OTPException(
+            raise OTPException(_
                 (f"Sizda yaroqli OTP kodingiz bor. {ttl} soniydan keyin qayta urinib ko\'ring").format(ttl=ttl)
             )
         redis_conn.set(key, otp_hash, ex=expire_in)
@@ -150,7 +150,7 @@ class OTPService:
         stored_hash = redis_conn.get(f"{email}:otp")
 
         if not stored_hash or not check_password(f"{otp_secret}:{otp_code}", stored_hash.decode()):
-            raise OTPException("Yaroqsiz otp kodi")
+            raise OTPException(_("Yaroqsiz otp kodi"))
     @classmethod
     def generate_token(cls) -> str:
         return str(uuid4())
