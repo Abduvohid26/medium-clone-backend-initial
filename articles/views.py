@@ -9,4 +9,4 @@ User = get_user_model()
 class ArticleViewSet(ModelViewSet):
     queryset = Articles.objects.all()
     serializer_class = ArticlesSerializer
-    permission_classes = [permissions.AllowAny]
+    permission_classes = [permissions.IsAuthenticated]
