@@ -6,7 +6,6 @@ from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth import get_user_model
 from drf_spectacular.utils import extend_schema, extend_schema_view
 from django.contrib.auth import update_session_auth_hash
-import random
 from rest_framework.exceptions import ValidationError
 from rest_framework import status, permissions, generics, parsers, exceptions
 from django.utils.translation import gettext_lazy as _
@@ -21,7 +20,8 @@ from .serializers import (
     ForgotPasswordVerifyRequestSerializer,
     ResetPasswordResponseSerializer,
     ForgotPasswordVerifyResponseSerializer,
-    ForgotPasswordResponseSerializer, )
+    ForgotPasswordResponseSerializer
+)
 
 from .services import TokenService, UserService, SendEmailService, OTPService
 
@@ -292,3 +292,4 @@ class ResetPasswordView(generics.UpdateAPIView):
         tokens = UserService.create_tokens(user, is_force_add_to_redis=True)
         redis_conn.delete(token_hash)
         return Response(tokens)
+

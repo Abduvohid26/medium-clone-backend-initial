@@ -1,5 +1,3 @@
-from functools import cache
-
 from django.contrib.auth import authenticate
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
@@ -8,7 +6,6 @@ from .errors import BIRTH_YEAR_ERROR_MSG
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
-
 User = get_user_model()
 
 
@@ -132,3 +129,4 @@ class ResetPasswordResponseSerializer(serializers.Serializer):
         except ValidationError as e:
             raise serializers.ValidationError(e.messages)
         return value
+
