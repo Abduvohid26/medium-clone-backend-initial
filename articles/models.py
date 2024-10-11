@@ -11,9 +11,18 @@ class Topics(models.Model):
     def __str__(self):
         return f'{self.name}'
 
+
+class Claps(models.Model):
+    name = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.name
+
+
 class Articles(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     topics = models.ManyToManyField(Topics)
+    claps = models.ForeignKey(Claps, on_delete=models.CASCADE, null=True, blank=True)
     title = models.CharField(max_length=255)
     summary = models.TextField()
     content = models.TextField()
@@ -24,3 +33,5 @@ class Articles(models.Model):
 
     def __str__(self):
         return f'{self.title} : {self.status}'
+
+
