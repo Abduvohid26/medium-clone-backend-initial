@@ -31,9 +31,10 @@ class Article(models.Model):
         return f'{self.title} : {self.status}'
 
     class Meta:
-        db_table = "article"
-        verbose_name = "Article"
-        verbose_name_plural = "Articles"
+        db_table = "article"  # Jadval nomi
+        verbose_name = "Article"  # Modelning inson o'qiy oladigan nomi
+        verbose_name_plural = "Articles"  # Ko‘plik shakli
+        ordering = ["-created_at"]  # Teskari tartibda saralash
 
 
 class Claps(models.Model):
