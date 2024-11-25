@@ -20,7 +20,7 @@ class ClapsSerializer(serializers.ModelSerializer):
         fields = ['user', 'count']
 
 # Articles Serializer
-class ArticlesSerializer(serializers.ModelSerializer):
+class ArticleSerializer(serializers.ModelSerializer):
     author = AuthorSerializer(read_only=True)
     topics = TopicsSerializer(read_only=True, many=True)
     claps = serializers.SerializerMethodField()

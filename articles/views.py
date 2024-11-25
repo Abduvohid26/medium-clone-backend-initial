@@ -1,12 +1,9 @@
-from rest_framework.viewsets import ModelViewSet
-from .serializers import AuthorSerializer, TopicsSerializer, ArticlesSerializer
-from .models import Topic, Article
-from rest_framework import permissions
-from rest_framework.response import Response
-from django.contrib.auth import get_user_model
-User = get_user_model()
+# articles/views.py
 
-class ArticleViewSet(ModelViewSet):
+from rest_framework import viewsets
+from .models import Article
+from .serializers import ArticleSerializer
+
+class ArticlesViewSet(viewsets.ModelViewSet):
     queryset = Article.objects.all()
-    serializer_class = ArticlesSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    serializer_class = ArticleSerializer
