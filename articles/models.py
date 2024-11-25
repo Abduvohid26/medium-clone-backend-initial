@@ -15,6 +15,8 @@ class Topic(models.Model):
         db_table = 'topic'
         verbose_name = 'Topic'  # Verbose name for the model
         verbose_name_plural = 'Topics'  # Verbose plural name for the model
+        ordering = ['name']  # Add this line to define the default ordering
+
 
 class Article(models.Model):
     author = models.ForeignKey(User, related_name='articles', on_delete=models.CASCADE)
@@ -51,4 +53,6 @@ class Clap(models.Model):
         db_table = 'clap'
         verbose_name = 'Clap'  # Verbose name for the model
         verbose_name_plural = 'Claps'  # Verbose plural name for the model
+        ordering = ['count']  # Add this line to define the default ordering
+
 
