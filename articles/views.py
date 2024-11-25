@@ -2,7 +2,7 @@ from rest_framework import viewsets
 from .models import Article
 from .serializers import ArticleCreateSerializer, ArticleDetailSerializer
 
-class ArticlesViewSet(viewsets.ModelViewSet):
+class ArticlesView(viewsets.ModelViewSet):
     queryset = Article.objects.all()
     serializer_class = ArticleDetailSerializer
 
