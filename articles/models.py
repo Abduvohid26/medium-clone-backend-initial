@@ -30,6 +30,9 @@ class Article(models.Model):
     def __str__(self):
         return f'{self.title} : {self.status}'
 
+    class Meta:
+        db_table = "article"
+
 
 class Claps(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='claps_users')
