@@ -10,3 +10,6 @@ class ArticlesView(viewsets.ModelViewSet):
         if self.action == 'create':
             return ArticleCreateSerializer
         return ArticleDetailSerializer
+
+    def create(self, request, *args, **kwargs):
+        return super().create(request, *args, **kwargs)
