@@ -4,53 +4,38 @@ from django.contrib.auth import get_user_model
 User = get_user_model()
 
 class Topic(models.Model):
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=100)
     description = models.TextField()
-    is_active = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=True)
 
     def __str__(self):
-        return f'{self.name}'
+        return self.name
 
-    class Meta:
-        db_table = "topic"  # Jadval nomi
-        verbose_name = "Topic"  # Modelning inson o'qiy oladigan nomi
-        verbose_name_plural = "Topics"  # Ko‘plik shakli
-        ordering = ["name"]  # `name` bo'yicha tartiblanadi
 
 
 class Article(models.Model):
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
-    topics = models.ManyToManyField(Topic)
+    author = models.ForeignKey(User, related_name='articles', on_delete=models.CASCADE)
     title = models.CharField(max_length=255)
     summary = models.TextField()
     content = models.TextField()
-    status = models.CharField(max_length=50)
-    thumbnail = models.ImageField(upload_to='articles/thumbnails/')
+    thumbnail = models.ImageField(upload_to='articles/thumbnails/', null=True, blank=True)
+    status = models.CharField(max_length=20, choices=[('pending', 'Pending'), ('publish', 'Publish')], default='pending')
+    topics = models.ManyToManyField('Topic', related_name='articles')
+    views_count = models.IntegerField(default=0)
+    reads_count = models.IntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    views_count = models.IntegerField()
-    reads_count = models.IntegerField()
 
     def __str__(self):
-        return f'{self.title} : {self.status}'
-
-    class Meta:
-        db_table = "article"  # Jadval nomi
-        verbose_name = "Article"  # Modelning inson o'qiy oladigan nomi
-        verbose_name_plural = "Articles"  # Ko‘plik shakli
-        ordering = ["-created_at"]  # Teskari tartibda saralash
+        return self.title
 
 
-class Claps(models.Model):
-    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='claps_users')
-    article = models.ForeignKey(Article, on_delete=models.SET_NULL, null=True, related_name='claps')
-    count = models.IntegerField()
+class Clap(models.Model):
+    user = models.ForeignKey(User, related_name='claps', on_delete=models.CASCADE)
+    article = models.ForeignKey('Article', related_name='claps', on_delete=models.CASCADE)
+    count = models.IntegerField(default=0)
 
     def __str__(self):
-        return str(self.count)
+        return f"{self.user.username} clapped for {self.article.title}"
 
-    class Meta:
-        db_table = "clap"  # Jadval nomi
-        verbose_name = "Clap"  # Modelning inson o'qiy oladigan nomi
-        verbose_name_plural = "Claps"  # Ko‘plik shakli
-        ordering = ["-count"]  # Claplar soni bo'yicha tartiblanadi
+
