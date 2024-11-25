@@ -3,7 +3,7 @@ from django.utils import timezone
 from django.contrib.auth import get_user_model
 User = get_user_model()
 
-class Topics(models.Model):
+class Topic(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField()
     is_active = models.BooleanField(default=False)
@@ -14,9 +14,9 @@ class Topics(models.Model):
 
 
 
-class Articles(models.Model):
+class Article(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
-    topics = models.ManyToManyField(Topics)
+    topics = models.ManyToManyField(Topic)
     title = models.CharField(max_length=255)
     summary = models.TextField()
     content = models.TextField()
@@ -33,7 +33,7 @@ class Articles(models.Model):
 
 class Claps(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='claps_users')
-    article = models.ForeignKey(Articles, on_delete=models.SET_NULL, null=True, related_name='claps')
+    article = models.ForeignKey(Article, on_delete=models.SET_NULL, null=True, related_name='claps')
     count  = models.IntegerField()
 
     def __str__(self):

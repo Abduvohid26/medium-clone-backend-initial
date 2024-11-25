@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Articles, Topics, Claps
+from .models import Article, Topic, Claps
 from django.contrib.auth import get_user_model
 User = get_user_model()
 
@@ -11,7 +11,7 @@ class AuthorSerializer(serializers.ModelSerializer):
 
 class TopicsSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Topics
+        model = Topic
         fields = ['id', 'name', 'description', 'is_active']
 
 class ClapsSerializer(serializers.ModelSerializer):
@@ -27,7 +27,7 @@ class ArticlesSerializer(serializers.ModelSerializer):
     claps = serializers.SerializerMethodField()
 
     class Meta:
-        model = Articles
+        model = Article
         fields = [
             'id', 'author', 'title', 'summary', 'content', 'status',
             'thumbnail', 'topics', 'created_at', 'updated_at', 'claps', 'views_count', 'reads_count'
