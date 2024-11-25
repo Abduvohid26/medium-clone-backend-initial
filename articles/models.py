@@ -12,7 +12,7 @@ class Topic(models.Model):
         return self.name
 
     class Meta:
-        db_table = 'topics'
+        db_table = 'topic'
         verbose_name = 'Topic'  # Verbose name for the model
         verbose_name_plural = 'Topics'  # Verbose plural name for the model
 
