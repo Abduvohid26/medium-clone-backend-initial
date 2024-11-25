@@ -13,6 +13,8 @@ class Topic(models.Model):
 
     class Meta:
         db_table = 'topics'
+        verbose_name = 'Topic'  # Verbose name for the model
+        verbose_name_plural = 'Topics'  # Verbose plural name for the model
 
 class Article(models.Model):
     author = models.ForeignKey(User, related_name='articles', on_delete=models.CASCADE)
@@ -32,6 +34,8 @@ class Article(models.Model):
 
     class Meta:
         db_table = 'article'
+        verbose_name = 'Article'  # Verbose name for the model
+        verbose_name_plural = 'Articles'  # Verbose plural name for the model
 
 class Clap(models.Model):
     user = models.ForeignKey(User, related_name='claps', on_delete=models.CASCADE)
@@ -43,5 +47,6 @@ class Clap(models.Model):
 
     class Meta:
         db_table = 'clap'
-
+        verbose_name = 'Clap'  # Verbose name for the model
+        verbose_name_plural = 'Claps'  # Verbose plural name for the model
 
