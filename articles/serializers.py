@@ -23,7 +23,6 @@ class ClapsSerializer(serializers.ModelSerializer):
 class ArticlesSerializer(serializers.ModelSerializer):
     author = AuthorSerializer(read_only=True)
     topics = TopicsSerializer(read_only=True, many=True)
-    print(topics, 's')
     claps = serializers.SerializerMethodField()
 
     class Meta:
