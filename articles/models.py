@@ -36,6 +36,8 @@ class Article(models.Model):
         db_table = 'article'
         verbose_name = 'Article'  # Verbose name for the model
         verbose_name_plural = 'Articles'  # Verbose plural name for the model
+        ordering = ['-created_at']  # Add this line to define the default ordering
+
 
 class Clap(models.Model):
     user = models.ForeignKey(User, related_name='claps', on_delete=models.CASCADE)
