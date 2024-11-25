@@ -11,7 +11,8 @@ class Topic(models.Model):
     def __str__(self):
         return self.name
 
-
+    class Meta:
+        db_table = 'topics'
 
 class Article(models.Model):
     author = models.ForeignKey(User, related_name='articles', on_delete=models.CASCADE)
@@ -29,6 +30,8 @@ class Article(models.Model):
     def __str__(self):
         return self.title
 
+    class Meta:
+        db_table = 'article'
 
 class Clap(models.Model):
     user = models.ForeignKey(User, related_name='claps', on_delete=models.CASCADE)
@@ -37,5 +40,8 @@ class Clap(models.Model):
 
     def __str__(self):
         return f"{self.user.username} clapped for {self.article.title}"
+
+    class Meta:
+        db_table = 'clap'
 
 
