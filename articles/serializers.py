@@ -3,6 +3,7 @@ from .models import Articles, Topics, Claps
 from django.contrib.auth import get_user_model
 User = get_user_model()
 
+
 class AuthorSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
@@ -16,19 +17,22 @@ class TopicsSerializer(serializers.ModelSerializer):
 class ClapsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Claps
-        fields = ['name']
+        fields = ['user', 'count']
 
+# Articles Serializer
 class ArticlesSerializer(serializers.ModelSerializer):
     author = AuthorSerializer(read_only=True)
-    topics = TopicsSerializer(many=True, read_only=True)
+    topics = TopicsSerializer(read_only=True, many=True)
+    print(topics, 's')
     claps = serializers.SerializerMethodField()
 
     class Meta:
         model = Articles
         fields = [
             'id', 'author', 'title', 'summary', 'content', 'status',
-            'thumbnail', 'topics', 'created_at', 'updated_at', 'claps'
+            'thumbnail', 'topics', 'created_at', 'updated_at', 'claps', 'views_count', 'reads_count'
         ]
 
     def get_claps(self, obj):
-        return obj.claps if obj.claps is not None else []
+        claps = obj.claps.all()
+        return ClapsSerializer(claps, many=True).data
