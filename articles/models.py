@@ -11,7 +11,11 @@ class Topic(models.Model):
     def __str__(self):
         return f'{self.name}'
 
-
+    class Meta:
+        db_table = "topic"  # Jadval nomi
+        verbose_name = "Topic"  # Modelning inson o'qiy oladigan nomi
+        verbose_name_plural = "Topics"  # Ko‘plik shakli
+        ordering = ["name"]  # `name` bo'yicha tartiblanadi
 
 
 class Article(models.Model):
@@ -40,7 +44,13 @@ class Article(models.Model):
 class Claps(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='claps_users')
     article = models.ForeignKey(Article, on_delete=models.SET_NULL, null=True, related_name='claps')
-    count  = models.IntegerField()
+    count = models.IntegerField()
 
     def __str__(self):
         return str(self.count)
+
+    class Meta:
+        db_table = "clap"  # Jadval nomi
+        verbose_name = "Clap"  # Modelning inson o'qiy oladigan nomi
+        verbose_name_plural = "Claps"  # Ko‘plik shakli
+        ordering = ["-count"]  # Claplar soni bo'yicha tartiblanadi
